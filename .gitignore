@@ -40,6 +40,7 @@ ScaffoldingReadMe.txt
 ~$*
 *~
 CodeCoverage/
+GameStore.db
 
 # MSBuild Binary and Structured Log
 *.binlog
