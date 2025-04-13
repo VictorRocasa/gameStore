@@ -1,0 +1,21 @@
+GET http://localhost:5086/
+
+###
+
+GET http://localhost:5086/games
+
+###
+
+GET http://localhost:5086/games/2
+
+###
+
+POST http://localhost:5086/games
+Content-Type: application/json
+
+{    
+    "Name": "Minecraft", 
+    "Genre": "Infancy Simulator", 
+    "Price": 19.99,
+    "ReleaseDate": "2011-11-18"
+}
