@@ -1,5 +1,6 @@
+using GameStore.Api.Data;
 using GameStore.Api.Dtos;
-using Microsoft.AspNetCore.Builder;
+using GameStore.Api.Entities;
 
 namespace GameStore.Api.Endpoints;
 
@@ -32,7 +33,7 @@ private static readonly List<GameDto> games = [
     ),
 ];
 
-    public static RouteGroupBuilder MapGamesEndpoints(this WebApplication app) {
+    public static RouteGroupBuilder MapGamesEndpoints(this WebApplication app, GameStoreContext dbContext) {
         var group = app.MapGroup("games")
         .WithParameterValidation();
 
@@ -46,15 +47,17 @@ private static readonly List<GameDto> games = [
         }).WithName(GetGameEndpointName);
 
         group.MapPost("/", (CreateGameDto newGame) => {
-        GameDto game = new(
-                games.Count + 1,
-                newGame.Name,
-                newGame.Genre,
-                newGame.Price,
-                newGame.ReleaseDate
-        ); 
+        Game game = new() 
+        {
+                Name = newGame.Name,
+                Genre = dbContext.Genres.Find(newGame.GenreId),
+                GenreId = newGame.GenreId,
+                Price = newGame.Price,
+                ReleaseDate = newGame.ReleaseDate
+        }; 
 
-        games.Add(game);
+        dbContext.Games.Add(game);
+        dbContext.SaveChanges();
 
         return Results.CreatedAtRoute(GetGameEndpointName, new { id = game.Id }, game);
         });
