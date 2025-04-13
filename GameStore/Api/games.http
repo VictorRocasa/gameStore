@@ -14,7 +14,7 @@ POST http://localhost:5086/games
 Content-Type: application/json
 
 {    
-    "Name": "Minecraft", 
+    # "Name": "Minecraft", 
     "Genre": "Infancy Simulator", 
     "Price": 19.99,
     "ReleaseDate": "2011-11-18"
@@ -22,11 +22,11 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:5086/games/5
+PUT http://localhost:5086/games/2
 Content-Type: application/json
 
 {
-    "name": "Final Fantasy XIX",
+    # "name": "Final Fantasy XIX",
     "genre": "Role Playing Game",
     "price": 59.99,
     "releaseDate": "2010-09-30"
