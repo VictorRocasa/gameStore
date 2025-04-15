@@ -14,7 +14,7 @@ POST http://localhost:5086/games
 Content-Type: application/json
 
 {    
-    "Name": "Minecraft", 
+    "Name": "Minecraft 4", 
     "GenreId": 5, 
     "Price": 19.99,
     "ReleaseDate": "2011-11-18"
