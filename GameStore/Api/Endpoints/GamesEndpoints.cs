@@ -33,7 +33,7 @@ private static readonly List<GameDto> games = [
     ),
 ];
 
-    public static RouteGroupBuilder MapGamesEndpoints(this WebApplication app, GameStoreContext dbContext) {
+    public static RouteGroupBuilder MapGamesEndpoints(this WebApplication app) {
         var group = app.MapGroup("games")
         .WithParameterValidation();
 
@@ -46,7 +46,7 @@ private static readonly List<GameDto> games = [
             
         }).WithName(GetGameEndpointName);
 
-        group.MapPost("/", (CreateGameDto newGame) => {
+        group.MapPost("/", (CreateGameDto newGame, GameStoreContext dbContext) => {
         Game game = new() 
         {
                 Name = newGame.Name,
@@ -59,7 +59,15 @@ private static readonly List<GameDto> games = [
         dbContext.Games.Add(game);
         dbContext.SaveChanges();
 
-        return Results.CreatedAtRoute(GetGameEndpointName, new { id = game.Id }, game);
+        GameDto gameDto = new GameDto (
+            game.Id,
+            game.Name,
+            game.Genre!.Name,
+            game.Price,
+            game.ReleaseDate
+        );  
+
+        return Results.CreatedAtRoute(GetGameEndpointName, new { id = game.Id }, gameDto);
         });
 
         group.MapPut("/{id}", (int id, UpdateGameDto updateGame) => {

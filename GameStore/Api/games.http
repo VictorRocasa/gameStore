@@ -14,8 +14,8 @@ POST http://localhost:5086/games
 Content-Type: application/json
 
 {    
-    # "Name": "Minecraft", 
-    "Genre": "Infancy Simulator", 
+    "Name": "Minecraft", 
+    "GenreId": 5, 
     "Price": 19.99,
     "ReleaseDate": "2011-11-18"
 }
