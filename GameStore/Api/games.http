@@ -6,7 +6,7 @@ GET http://localhost:5086/games
 
 ###
 
-GET http://localhost:5086/games/5
+GET http://localhost:5086/games/6
 
 ###
 
@@ -14,11 +14,36 @@ POST http://localhost:5086/games
 Content-Type: application/json
 
 {    
-    "Name": "Minecraft 4", 
-    "GenreId": 5, 
+    "Name": "Street Fighter II", 
+    "GenreId": 2, 
     "Price": 19.99,
-    "ReleaseDate": "2011-11-18"
+    "ReleaseDate": "1992-07-15"
 }
+
+# private static readonly List<GameSumaryDto> games = [
+#     new (
+#         1,
+#         "Street Fighter II",
+#         "Fighting",
+#         19.99M,
+#         new DateOnly(1992, 7, 15)
+#     ),
+#     new (
+#         2,
+#         "Final Fantasy XIX",
+#         "RPG",
+#         59.99M,
+#         new DateOnly(2010, 9, 30)
+#     ),
+#     new (
+#         3,
+#         "FIFA 23",
+#         "Sports",
+#         69.99M,
+#         new DateOnly(2022, 9, 27)
+#     ),
+# ];
+
 
 ###
 

@@ -10,7 +10,7 @@ public static class GamesEndpoints
 
 const string GetGameEndpointName = "GetGame";
 
-private static readonly List<GameDto> games = [
+private static readonly List<GameSumaryDto> games = [
     new (
         1,
         "Street Fighter II",
@@ -38,24 +38,24 @@ private static readonly List<GameDto> games = [
         var group = app.MapGroup("games")
         .WithParameterValidation();
 
-        group.MapGet("/", () => games);
+        group.MapGet("/", (GameStoreContext dbContext) => dbContext.Games.Find());
 
-        group.MapGet("/{id}", (int id) => {
-            GameDto? game = games.Find(game => game.Id == id);
+        group.MapGet("/{id}", (int id, GameStoreContext dbContext) => {
 
-            return game is null ? Results.NotFound() : Results.Ok(game);
+            Game? game = dbContext.Games.Find(id);
+
+            return game is null ? Results.NotFound() : Results.Ok(game.ToGameDetailsDto());
             
         }).WithName(GetGameEndpointName);
 
         group.MapPost("/", (CreateGameDto newGame, GameStoreContext dbContext) => {
         
         Game game = newGame.ToEntity();
-        game.Genre = dbContext.Genres.Find(newGame.GenreId);
 
         dbContext.Games.Add(game);
         dbContext.SaveChanges();
 
-        return Results.CreatedAtRoute(GetGameEndpointName, new { id = game.Id }, game.ToDto());
+        return Results.CreatedAtRoute(GetGameEndpointName, new { id = game.Id }, game.ToGameDetailsDto());
         });
 
         group.MapPut("/{id}", (int id, UpdateGameDto updateGame) => {
@@ -65,7 +65,7 @@ private static readonly List<GameDto> games = [
                 return Results.NotFound();
             }
 
-            games[index] = new GameDto(
+            games[index] = new GameSumaryDto(
                 id,
                 updateGame.Name,
                 updateGame.Genre,
