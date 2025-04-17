@@ -1,8 +1,8 @@
-GET http://localhost:5086/
+GET http://localhost:5086/games
 
 ###
 
-GET http://localhost:5086/games
+GET http://localhost:5086/genres
 
 ###
 
